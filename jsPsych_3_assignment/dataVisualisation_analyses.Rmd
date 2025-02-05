@@ -1,0 +1,202 @@
+---
+title: "Data Visualization"
+output: html_notebook
+---
+
+Load the data: 
+```{r}
+# this is to load the data into R Notebook
+data = read.csv("assignment_dataVis_dataset.csv")
+head(data)
+```
+
+
+# Question 1: 
+## Mean for 4 conditions 
+
+### Condition 1: 
+##### Mean x: 54.26327
+##### Mean y: 47.83225
+
+### Condition 2: 
+##### Mean x: 54.26873
+##### Mean y: 47.83082
+
+### Condition 3: 
+##### Mean x: 54.26588
+##### Mean y: 47.8315
+
+### Condition 4: 
+##### Mean x: 54.26734
+##### Mean y: 47.83955
+
+
+```{r}
+
+# Here I am dividing the data frame by condition
+condition1 <- data[1:142, ]
+condition2 <- data[143:284, ]
+condition3 <- data[285:426, ]
+condition4 <- data[427:568, ]
+
+# Below is the code for the x and y mean for all conditions. 
+meancond1x <- mean(condition1$x)
+meancond1y <- mean(condition1$y)
+
+meancond2x <- mean(condition2$x)
+meancond2y <- mean(condition2$y)
+
+meancond3x <- mean(condition3$x)
+meancond3y <- mean(condition3$y)
+
+meancond4x <- mean(condition4$x)
+meancond4y <- mean(condition4$y)
+
+print(meancond1x)
+print(meancond1y)
+print(meancond2x)
+print(meancond2y)
+print(meancond3x)
+print(meancond3y)
+print(meancond4x)
+print(meancond4y)
+
+```
+## Standard Deviation for 4 conditions 
+
+### Condition 1: 
+##### sd x: 16.76514
+##### sd y: 26.9354
+
+### Condition 2: 
+##### sd x: 16.76924
+##### sd y: 26.93573
+
+### Condition 3: 
+##### sd x: 16.76885
+##### sd y: 26.93861
+
+### Condition 4: 
+##### sd x: 16.76896
+##### sd y: 26.93027
+
+
+```{r}
+
+# Below are the code lined to calculate the standard deviation values for x and y
+sdcond1x <- sd(condition1$x)
+sdcond1y <- sd(condition1$y)
+
+sdcond2x <- sd(condition2$x)
+sdcond2y <- sd(condition2$y)
+
+sdcond3x <- sd(condition3$x)
+sdcond3y <- sd(condition3$y)
+
+sdcond4x <- sd(condition4$x)
+sdcond4y <- sd(condition4$y)
+
+print(sdcond1x)
+print(sdcond1y)
+print(sdcond2x)
+print(sdcond2y)
+print(sdcond3x)
+print(sdcond3y)
+print(sdcond4x)
+print(sdcond4y)
+
+```
+
+```{r}
+library(ggplot2) # this needs to be loaded to make the graphs 
+
+# Scatter plot for condition 1 
+ggplot(condition1, aes(x = x, y = y, color = condition)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(title = "Scatter Plot of Condition 1",
+       x = "X Variable",
+       y = "Y Variable") 
+  
+
+# Scatter plot for condition 2 
+ggplot(condition2, aes(x = x, y = y, color = condition)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(title = "Scatter Plot of Condition 2",
+       x = "X Variable",
+       y = "Y Variable") 
+  
+
+# Scatter plot for condition 3 
+ggplot(condition3, aes(x = x, y = y, color = condition)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(title = "Scatter Plot of Condition 3",
+       x = "X Variable",
+       y = "Y Variable") 
+  
+
+# Scatter plot for condition 4 
+ggplot(condition4, aes(x = x, y = y, color = condition)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(title = "Scatter Plot of Condition 4",
+       x = "X Variable",
+       y = "Y Variable") 
+  
+# geom_smooth(method = "lm", se = TRUE) this line of code adds a trend line. The se = TRUE is for the standard error and adds a confidence band on the regression line to show the uncertainty of the fit. 
+```
+
+```{r}
+install.packages("reshape2")  # have to install this package in order to turn the data into long format. 
+library(reshape2) # this will load package.  
+
+# this will turn the data into long format for the graphs. 
+data_long <- melt(data, id.vars = "condition", measure.vars = c("x", "y"))
+
+```
+
+
+```{r}
+
+# this graph is a good way to look at the 4 conditions side by side while comparing the x and y values as well 
+
+ggplot(data_long, aes(x = variable, y = value, fill = variable)) +
+  geom_boxplot() +
+  facet_wrap(~condition) +
+  labs(title = "Box Plot of x and y by Condition", y = "Value", x = "Variable") +
+  theme_minimal() +
+  scale_fill_manual(values = c("lightpink", "plum"))
+
+
+```
+
+```{r}
+
+# Below are the violin plots for the x values and the y values for each condition
+
+ggplot(data, aes(x = condition, y = x, fill = condition)) +
+  geom_violin() +
+  labs(title = "Violin Plot of X by Condition", x = "Condition", y = "Y Variable") +
+  theme_minimal()
+
+ggplot(data, aes(x = condition, y = y, fill = condition)) +
+  geom_violin() +
+  labs(title = "Violin Plot of Y by Condition", x = "Condition", y = "Y Variable") +
+  theme_minimal()
+```
+
+# Question 2  
+#### What can be concluded from the data set?  
+The scatter plots with the correlation between the x and y graphs show that the linear regression line for all of the graphs shows a very low correlation as the points are scattered randomly and do not show a significant trend. The box plot shows a larger variation of the y values compared to the x values for all of the conditions. The violin plot shows that Conditions 1 and 3 have the widest spread, indicating high variability in Y values, while Condition 4 has the most concentrated distribution. The thickest areas suggest that Condition 2 has a more uniform spread, whereas Condition 4 has peaks around specific values. For the violin plot of x values, Condition 1 has a wider spread, indicating high variability, while Condition 4 has a more concentrated distribution. Condition 2 and Condition 3 show a relatively uniform spread, with peaks at different Y values.   
+
+#### What did you find most challenging about this assignment?  
+I think the hardest part about this assignment was to figure out how to work with my data. Despite learning it in stats, I feel that getting used to this notebook format was challenging. Some of the graphing we learned in stats was the basic frequency distribution and box plots. However, with this assignment, I tried to create a box plot that would display all of the conditions and variables together, which we had not learned.   
+
+#### What did you learn in completing this assignment? What are you still curious about? 
+I learned how to create a more complex box plot and work with data in R notebook. I also learned how the notebook works with the parts where you can write text and the parts where you can write code. I also learned how to use the graph templates provided online and adjust the code so that it would fit my data. I am curious about how to clean and preprocess data to make it easier to graph. I also want to improve my ability to create more visually appealing and informative graphs.   
+
+#### Why is it important to visualize data? 
+When we are given a data set, it is almost impossible for use to see the correlation or the results simply by looking at the numbers. By creating graphs and other info graphics to visualize the data, we are better equipped at understanding the data and seeing the patterns which helps us come to more accurate conclusions.            
+
