@@ -1,0 +1,239 @@
+---
+title: "R Notebook"
+output: html_notebook
+bibliography: references.bib
+csl: apa.csl
+---
+
+# Pre-registration 
+
+Adapted from <https://osf.io/preprints/metaarxiv/epgjd> into markdown format.
+
+<details>
+
+-   [Study Information](#study-information)
+    -   [1. Title](#1-title)
+    -   [2. Authors](#2-authors)
+    -   [3. Description](#3-description)
+    -   [4. Hypotheses](#4-hypotheses)
+-   [Design Plan](#design-plan)
+    -   [5. Study type](#5-study-type)
+    -   [6. Blinding](#6-blinding)
+    -   [7. Is there any additional blinding in this study?](#7-is-there-any-additional-blinding-in-this-study-)
+    -   [8. Study design](#8-study-design)
+    -   [9. Randomization](#9-randomization)
+-   [Sampling Plan](#sampling-plan)
+    -   [10. Existing data](#10-existing-data)
+    -   [11. Explanation of existing data](#11-explanation-of-existing-data)
+    -   [12. Data collection procedures](#12-data-collection-procedures)
+    -   [13. Sample size](#13-sample-size)
+    -   [14. Sample size rationale](#14-sample-size-rationale)
+    -   [15. Stopping rule](#15-stopping-rule)
+-   [Variables](#variables)
+    -   [16. Manipulated variables](#16-manipulated-variables)
+    -   [17. Measured variables](#17-measured-variables)
+    -   [18. Indices](#18-indices)
+-   [Analysis Plan](#analysis-plan)
+    -   [19. Statistical models](#19-statistical-models)
+    -   [20. Transformations](#20-transformations)
+    -   [21. Inference criteria](#21-inference-criteria)
+    -   [22. Data exclusion](#22-data-exclusion)
+    -   [23. Missing data](#23-missing-data)
+    -   [24. Exploratory analysis](#24-exploratory-analysis)
+
+</details>
+
+# Study Information {#study-information}
+
+## 1. Title
+
+> The Impact of Urban vs. Rural Priming on Mental Rotation Task Performance
+
+## 2. Authors
+
+> Fatema Mala
+
+## 3. Description
+
+> This experiment will explore whether environmental priming can impact a person's visual perception and spatial processing. Specifically, it will assess whether priming for urban or rural areas affects performance on mental rotation tasks. The potential findings of this study could advance our understanding of how different environments shape perceptual and cognitive abilities, especially as the world becomes increasingly urbanized. While prior research has examined how environmental factors influence spatial cognition, there is a gap in understanding how exposure to different environmental contexts can affect perceptual processes such as depth perception, spatial orientation, and mental rotation.
+>
+> Experience shapes perception, with environmental differences influencing how individuals interpret spatial relationships and visual cues. Previous research indicates that individuals’ environments can shape their perceptual experiences. For example, rural subjects proved more susceptible to the perspective illusion, while urban groups were more susceptible to the L-form and horizontal-vertical illusion [@hagen_intra-cultural_1977]. These findings suggest that prolonged exposure to different environments changes visual perception by influencing how people interpret depth, perspective, and spatial layouts. Moreover, studies have also found that the environment in which one grows up can affect cognition across one's lifespan. Exposure to urban environments influences differences in perception and may offer a perceptual and cognitive benefit in older age [@hirst_urban_2022;@saenz_ruralurban_2022]. Additionally, @lappin_environmental_2006 demonstrated that the surrounding visual context can influence distance perception in familiar environments further highlighting the significance of the environment. Overall, these studies show the importance of environmental context in shaping how individuals process and interpret visual and spatial information. 
+> 
+> This experiment will center on mental rotation tasks, a key component in spatial reasoning, as participants must first process the visual stimuli before transforming them. Mental rotation, the cognitive ability to imagine how an object would appear if rotated from its original orientation, is a fundamental skill in spatial reasoning. Previous research indicates that mental rotation performance can vary based on the nature of the objects involved. For instance, a study found that mental rotation tasks involving human-like objects had a stronger association with spatial perspective-taking abilities than tasks with abstract objects [@muto_correlational_2021-1]. People can also mentally rotate objects consistently, similar to physically rotating real objects. Additionally, mental rotation is shown to activate brain regions involved in spatial processing [@zacks_neuroimaging_2008-2]. A study exploring the relationship between mental rotation and map navigation abilities found that individuals with higher mental rotation proficiency performed better in tasks requiring spatial orientation and map rotation [@campos-juanatey_mental_2021]. 
+> 
+> So far, there is not much research into whether mental rotation can be affected by a specific type of environment. To assess this gap, participants in this experiment will be primed to think about either an urban or rural environment. Priming can influence cognitive performance by activating specific mental representations. For example, in a study, female athletes exposed to negative sports-related priming exhibited diminished performance in mental rotation tasks compared to non-athletes [@ryan_womens_2015]. Another study explored how different priming strategies impact mental transformation processes, revealing that priming can affect cognitive strategies like spinning and flipping during mental rotation tasks [@kanamori_amount_2005-1]. 
+> 
+> The research question for this study is: Does priming with images of urban or rural environments affect an individual’s ability to perform mental rotation tasks, particularly with varying rotation angles (45° and 90°)? The current experiment will adapt a task used in previous studies to assess the effects of priming on participants' mental rotation abilities. The task presents two images of objects rotated at various degrees [@chrobak_mental_2018-1]. Participants must judge whether the images are the same or mirror images of each other, with the task focusing on 45° and 90° rotations. This adaptation allows a more direct comparison of how different environmental priming (urban vs. rural) may influence mental rotation performance.
+
+
+## 4. Hypotheses
+
+> Participants primed with urban environments will perform better (i.e., show higher accuracy or faster reaction times) on the 90° rotation task compared to the 45° rotation task, compared to those primed with rural environments. This is based on the idea that urban environments enhance spatial processing abilities. 
+>
+> Participants primed with rural environments will show slower performance (i.e., lower accuracy or longer reaction times) on both 45° and 90° rotations compared to those primed with urban environments.
+>
+> There will be a significant interaction between priming condition (urban vs. rural) and rotation condition (45° vs. 90°) on mental rotation task performance, where urban priming enhances performance on the 90° rotation task more than the 45° rotation task.
+
+
+# Design Plan {#design-plan}
+
+## 5. Study type
+
+> **Experiment** - This study will manipulate two factors—urban vs. rural priming and rotation condition (45° vs. 90°) to measure their effect on participants' performance in a mental rotation task. 
+
+## 6. Blinding
+
+> Blinding describes who is aware of the experimental manipulations within a study. Mark all that apply.
+
+-   [x] No blinding is involved in this study.
+
+-   [ ] For studies that involve human subjects, they will not know the treatment group to which they have been assigned.
+
+-   [ ] Personnel who interact directly with the study subjects (either human or non-human subjects) will not be aware of the assigned treatments. (Commonly known as "double blind")
+
+-   [ ] Personnel who analyze the data collected from the study are not aware of the treatment applied to any given group.
+
+## 7. Is there any additional blinding in this study?
+
+> No
+
+## 8. Study design
+
+> We have a mixed-design with two factors:
+>
+> Priming Condition (between-subjects): Urban vs. Rural
+>
+> Rotation Condition (within-subjects): 45° vs. 90° rotation
+
+
+> This is a  2x2 mixed-design study, where participants will be randomly assigned to either the urban priming or rural priming condition. The priming condition will comprise of the participants getting shown images from their given environment followed by interactive questions to help them feel immersed in the environment. For example, participants in the urban priming condition may be asked to imagine and name the sounds and sights of a busy city street, while those in the rural priming condition may be asked to visualize and name the open space and nature of a rural landscape. 
+>
+> Within each priming condition, participants will complete the mental rotation task under both 45° and 90° rotation conditions. However, different participants will experience different priming conditions, while all participants will experience both rotation conditions. To reduce order effects for the rotation task, the order of the rotation conditions (45° and 90°) will be counterbalanced. Some participants will perform the 45° rotation task first, followed by the 90° rotation task, while others will complete the tasks in the opposite order. 
+>
+> For the mental rotation task, participants will be shown pairs of images, one of which has been rotated at either a 45° or 90° angle. They will be required to judge whether the images are the same shape or mirror images of each other by pressing a key: "J" if the images are the same and "F" if they are mirror images. The primary goal of the task is to assess how the urban or rural priming condition may influence participants’ performance on mental rotation tasks
+
+## 9. Randomization
+
+> Each participant will be randomly assigned to one of the two experimental conditions using simple randomization. The two conditions are urban or rural priming. Each participant will be randomly assigned to one of these two conditions using a random number generator. Specifically, a random number between 0 and 1 will be generated, and if the number is below 0.5, the participant will be assigned to the urban priming condition, while if the number is above 0.5, they will be assigned to the rural priming condition
+
+# Sampling Plan {#sampling-plan}
+
+> In this section we'll ask you to describe how you plan to collect samples, as well as the number of samples you plan to collect and your rationale for this decision. Please keep in mind that the data described in this section should be the actual data used for analysis, so if you are using a subset of a larger dataset, please describe the subset that will actually be used in your study.
+
+## 10. Existing data
+
+-   [x] Registration prior to creation of data: As of the date of submission of this research plan for preregistration, the data have not yet been collected, created, or realized.
+-   [ ] Registration prior to any human observation of the data: As of the date of submission, the data exist but have not yet been quantified, constructed, observed, or reported by anyone - including individuals that are not associated with the proposed study. Examples include museum specimens that have not been measured and data that have been collected by non-human collectors and are inaccessible.
+-   [ ] Registration prior to accessing the data: As of the date of submission, the data exist, but have not been accessed by you or your collaborators. Commonly, this includes data that has been collected by another researcher or institution.
+-   [ ] Registration prior to analysis of the data: As of the date of submission, the data exist and you have accessed it, though no analysis has been conducted related to the research plan (including calculation of summary statistics). A common situation for this scenario when a large dataset exists that is used for many different studies over time, or when a data set is randomly split into a sample for exploratory analyses, and the other section of data is reserved for later confirmatory data analysis.
+-   [ ] Registration following analysis of the data: As of the date of submission, you have accessed and analyzed some of the data relevant to the research plan. This includes preliminary analysis of variables, calculation of descriptive statistics, and observation of data distributions. Please see cos.io/prereg for more information.
+
+## 11. Explanation of existing data
+
+> No existing data will be used in this study
+
+## 12. Data collection procedures
+
+> Participants will complete this experiment online. They will be informed that the experiment will be conducted for research purposes and will recieve no monetary compensation for it. They must have access to a computer, with internet connection and be fluent in English. Participants must also be at least 18 years old. Additionally, they will be randomly assigned to one of two conditions: urban or rural priming using randomization. They will be asked to complete a rotation task involving either a 45 degree or 90 degree rotation of objects. Each participant will only experience one priming condition but both rotation conditions. 
+
+## 13. Sample size
+
+> Our target sample size is 34 participants. We will attempt to recruit up to 40 participants, assuming some may not complete the entire task or may be excluded. 
+
+## 14. Sample size rationale
+
+> The software program G*Power was used to conduct a power analysis. Our goal was to achieve a power of 0.80, with an alpha of 0.05, and to detect a medium effect size (f = 0.25). The power analysis indicated that a sample size of 34 participants would be enough.  
+
+## 15. Stopping rule
+
+> We will continue data collection until we reach a total of 34 participants. If we reach the target sample size before the expected deadline, no further participants will be recruited. If we have not yet reached 34 participants, we will post recruitment announcements and encourage participants to sign up until we have the desired number. 
+
+# Variables {#variables}
+
+## 16. Manipulated variables
+
+> Priming Condition (between-subjects)
+Urban versus Rural: Participants will be randomly assigned to either an urban priming condition or a rural priming condition. The priming involves exposure to either urban or rural images with questions to prime the participant before completing the mental rotation task
+>
+> Rotation Condition (within-subjects)
+45° versus 90° rotation: Each participant will complete the mental rotation task under both the 45° and 90° rotation conditions.
+
+
+## 17. Measured variables
+
+> Performance: Measured through Accuracy and Reaction Time of the mental rotation task. These will assess participants' performance under different priming conditions (urban vs. rural) and rotation degrees (45° vs. 90°).
+>
+> Priming Effect: difference in performance between the two priming conditions (urban vs. rural) on the mental rotation task.
+
+## 18. Indices
+
+> No indices will be created for this study. The dependent variables of accuracy and reaction time will be analyzed separately, without combining them into a single measure.
+
+# Analysis Plan {#analysis-plan}
+
+> Hypothesis: The priming condition will influence performance on the mental rotation task. Participants primed with urban environments will have better performance (high accuracy and faster reaction time) on the mental rotation task. Additionally, participants will have better performance on the 45° condition compared to the 90° condition. 
+
+
+> Predictor: 
+> 
+> Priming Condition: Two Levels (Urban versus Rural). Between-subjects
+>
+> Rotation Condition: Two levels (45° vs. 90°). Within-subjects 
+
+> Outcome: 
+>
+> Accuracy: Percentage of correctly identified mental rotation items
+> 
+> Reaction Time: Time (milliseconds) taken to complete each mental rotation item
+
+## 19. Statistical models
+
+> We will use a 2X2 mixed-design ANOVA. The priming condition is a between-subjects factor, and rotation degree is a within-subjects factor. 
+>
+> Dependent variables:
+> 
+> Accuracy (correct responses)
+> 
+> Reaction time (time to respond) 
+
+> We will test for main effects of priming condition and rotation degree, as well as any interaction between these factors. Specifically, we expect the interaction to reveal whether the impact of priming condition on performance (accuracy and reaction time) is influenced by the rotation degree (45° vs. 90°).
+> 
+> Follow-up tests will be conducted for any significant main effects or interactions, including pairwise comparisons to evaluate the specific effects of priming condition and rotation degree on the dependent variables.
+
+
+## 20. Transformations
+
+> The priming condition will be coded as a dummy variable where "urban is coded as 0 and rural is coded as 1. 
+>
+> For the reaction time I will be using a logarithmic transformation to help normalize the data. Additionally, for the accuracy data, the arcsine square root transformation will be used to make the distributions more symmetric.  
+
+## 21. Inference criteria
+
+> P-value: The standard p value of p<0.05 will be used in this experiment to determine teh significance for the ANOVA. For values lower than 0.05 would indicate that the null hypothesis cna be rejected 
+>
+> Confidence Intervals: For each comparison (e.g., between urban and rural priming conditions), 95% confidence intervals will be reported. These intervals will help to assess the precision of the estimated effect size and provide a range of plausible values
+>
+> Two tailed tests will be used to see whether the priming conditon leads to better or worse performance (high or low accuracy/reaction time). 
+>
+> Post-hoc test: If significant effects are found in the ANOVA, a post-hoc Turkey HSD test will be performed to determine the effetcs of specific conditions. 
+> 
+> Effect Size: The effect size (partial eta squared) will also be calculated to see the strength of the effect of the conditions on performance. 
+
+
+## 22. Data exclusion
+
+> Incomplete data will be excluded from the analysis. This can happen is a participant fails to complete the experiment or follow the instructions. If participant shows signs of not following the experiment such as rushing through, their data will also be excluded. 
+> 
+> Outliers will also be identified: any data point outside the 3 SD range will be considered an outlier. If it severly distorts the results, then it may be excluded from the finding. 
+
+## 23. Missing data
+
+> Participants with incomplete data will be excluded from the results. This includes if the participant starts but does not finish the task, their response will be removed. Participants will have to answer or complete a task before they can move to the next step. Thus the only way there would be incomplete information is if they exit the experiment wihtout completing it. 
+
+## 24. Exploratory analysis
+
+> In addition to the primary hypothesis, we will also ask the participants what type of environment they grew up in (urban vs rural) to see the relationship between evironemnt background and performance on the task. 
+
+# References
+
+
