@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Perception Lab Experiment</title>
+    <script src="jspsych/dist/jspsych.js"></script>
+    <script src="jspsych/dist/plugin-html-button-response.js"></script>
+    <script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/dist/plugin-survey-html-form.js"></script>
+    <script src="jspsych/dist/plugin-preload.js"></script>
+    <link href="jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body></body>
+  <script>
+    const jsPsych = initJsPsych({
+      on_finish: function() {
+        jsPsych.data.get().localSave('csv','experimentdata.csv')
+      }})
+
+    var timeline = [];
+
+    // This code assigns participants to a condition (Urban or Rural) randomly. 
+    const conditions = ["Urban", "Rural"];
+    var selected_cond = jsPsych.randomization.sampleWithoutReplacement(conditions, 1)[0];
+
+    jsPsych.data.addProperties({ condition: selected_cond });
+
+    // Here I am defining image lists: adding the correct images to its respective conditon. 
+    var urban_images = [
+      "PrimingImages/urban.jpg",
+      "PrimingImages/urban2.jpg",
+      "PrimingImages/urban3.jpg"
+    ];
+
+    var rural_images = [
+      "PrimingImages/rural.jpg",
+      "PrimingImages/rural2.webp",
+      "PrimingImages/rural3.jpg"
+    ];
+
+    var stim_images = selected_cond === "Urban" ? urban_images : rural_images; // wha
+
+    // Welcome Page: This is the first page that will be displayed to the participants. 
+    var welcome_trial = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: "Welcome to the study!",
+      choices: ["Continue"]
+    };
+    timeline.push(welcome_trial);
+
+    // Instructions Block: Ensuring Proper Participation and that they meet the basic participant requirement
+    var screening = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: `
+        <h2>Before You Begin</h2>
+        <p>To ensure proper participation, please follow these guidelines:</p>
+        <ul>
+          <li>Make sure your environment is <b>quiet</b> and free from distractions.</li>
+          <li>Increase the <b>brightness</b> of your screen to the maximum level.</li>
+          <li>Only proceed if you have <b>normal or corrected-to-normal vision</b>.</li>
+        </ul>
+        <p>Click "Continue" when you are ready to begin.</p>
+      `,
+      choices: ["Continue"]
+    };
+
+
+    timeline.push(screening);
+
+    // This is to display the consent form to participants. If they do not consent, then the experiment will end. 
+    var consent = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: "<p>Results from this experiment will be saved and analyzed. By clicking 'I Consent', you agree to participate in this study.</p>",
+      choices: ["I Consent", "I Do Not Consent"],
+      on_finish: function(data) {
+        if (data.response === 1) { 
+          document.body.innerHTML = "<p>You have chosen not to participate. The study will now end. You can exit the tab.</p>";
+          setTimeout(() => jsPsych.endExperiment(), 2000); // ends the experiment after 2 seconds 
+        }
+      }
+    };
+    timeline.push(consent);
+
+    // This will push the instructions of the first task for the participants. 
+    var instructions = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p>This experiment contains two parts. You will shortly begin the
+        first part where you will receive <b>three images</b> of different environments each one displayed for 10 seconds.</p>
+        <p>Please try to retain as much information 
+        regarding the image as you can. After the image is displayed, you will be asked questions for each image. 
+        Please <b>respond to each prompt</b> given with as much detail as you can. Make sure you
+        answer every prompt before moving to the next image. Do not worry about correctness. Just try to recall and
+        answer prompts to your best ability</p>
+        <p>Press any key to begin.</p>
+      `,
+      post_trial_gap: 2000
+    };
+    timeline.push(instructions);
+
+    // Here I made a function that would create trials for each image and then also generate questions for those trials. 
+    function createImageTrials(imageList) {
+      imageList.forEach(function(image, index) {
+
+        // Below are the lines of codes I am using to just adjust the image sizes.  
+        let imageStyle = "max-width: 120%; max-height: 120%;";  
+
+        if (image === "PrimingImages/urban2.jpg") {
+          imageStyle = "max-width: 70%; max-height: 70%;";  
+        }
+        if (image === "PrimingImages/urban3.jpg") {
+          imageStyle = "max-width: 75%; max-height: 75%;";  
+        }
+        if (image === "PrimingImages/rural.jpg") {
+          imageStyle = "max-width: 100%; max-height: 100%;";  
+        }
+        if (image === "PrimingImages/rural2.webp") {
+          imageStyle = "max-width: 80%; max-height: 80%;";  
+        }
+        if (image === "PrimingImages/rural3.jpg") {
+          imageStyle = "max-width: 100%; max-height: 100%;";  
+        }
+
+        // This block of code will actually display the image to the participants with the adjusted sizes. The images will be displayed for 10 seconds 
+        var image_trial = {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: `<img src="${image}" alt="Image" style="${imageStyle}">`,
+          choices: "NO_KEYS", // participants cannot respond during the trial 
+          trial_duration: 10000 // trial will last 10 seconds
+        };
+      timeline.push(image_trial);
+
+        // This block of code is for the questions that will be displayed to the participants after each image is shown. 
+        var question_trial = {
+          type: jsPsychSurveyHtmlForm,
+          preamble: "<p>Think about the image you just saw and answer the following questions.</p>",
+          html: `
+            <label>How would you describe the layout of this environment? (e.g., open, crowded, structured, irregular)? 
+              <input name="structure" type="text"></label><br><br>
+
+            <label>If you were standing in this environment and turned to your immediate left, what would you expect to see? 
+              <input name="rotation" type="text"></label><br><br>
+
+            <label>Which objects in this image would look the most different if viewed from a different angle? 
+              <input name="angle" type="text"></label><br><br>
+
+            <label>If you had to navigate this environment, what landmarks or reference points would help guide you? 
+              <input name="navigation" type="text"></label><br><br>
+
+      
+          `,
+          button_label: "Continue", 
+
+          on_load: function() {
+            // This part has started timing as soon as the question window is displayed. If the participant skips through the questions quickly their data could be removed
+            window.priming_start_time = performance.now();
+
+            // This code prevents "Enter" key from submitting the form
+            document.addEventListener("keydown", function(event) {
+              if (event.key === "Enter") {
+                event.preventDefault();
+              }
+            });
+          },
+
+          on_finish: function(data) {
+            // this will store the duration. 
+            data.priming_duration = performance.now() - window.priming_start_time;
+          }
+        };
+        timeline.push(question_trial);
+      });
+    }
+
+    // Add trials based on condition
+    createImageTrials(stim_images);
+
+     // These are the instructions for the mental roation task block. 
+     var rotation_instructions = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p>Now you will begin the second part of the experiment, which involves judging the rotation of 3D blocks.</p>
+        <p>You will see three images. One on the top and two on the bottom. The bottom 2 images will be the <b>response images</b>.</p>
+        <p>For each pair of images on the bottom, you will need to decide which one is the <b>correct rotated version</b> of the top one.</p>
+        <p>If you think the <b>left</b> image is correct, press the <b>"F" key</b>. If you think the <b>right</b> image is correct, press the <b>"J" key</b>.</p>
+        <p>To make is easier place one finger on each key.</p>
+        <p>Press any key to begin.</p>
+      `,
+      post_trial_gap: 2000
+    };
+    timeline.push(rotation_instructions);
+
+    // This define rotation trials (alternating 90° and 45°). There are 16 trials. 
+    var rotation_images = [
+      { trial: "Trial1", correct: "Trial1_90", incorrect: "Trial1incor", rotation: 90 },
+      { trial: "Trial2", correct: "Trial2_45", incorrect: "Trial2incor", rotation: 45 },
+      { trial: "Trial3", correct: "Trial3_90", incorrect: "Trial3incor", rotation: 90 },
+      { trial: "Trial4", correct: "Trial4_45", incorrect: "Trial4incor", rotation: 45 },
+      { trial: "Trial5", correct: "Trial5_90", incorrect: "Trial5incor", rotation: 90 },
+      { trial: "Trial6", correct: "Trial6_45", incorrect: "Trial6incor", rotation: 45 },
+      { trial: "Trial7", correct: "Trial7_90", incorrect: "Trial7incor", rotation: 90 },
+      { trial: "Trial8", correct: "Trial8_45", incorrect: "Trial8incor", rotation: 45 },
+      { trial: "Trial9", correct: "Trial9_90", incorrect: "Trial9incor", rotation: 90 },
+      { trial: "Trial10", correct: "Trial10_45", incorrect: "Trial10incor", rotation: 45 },
+      { trial: "Trial11", correct: "Trial11_90", incorrect: "Trial11incor", rotation: 90 },
+      { trial: "Trial12", correct: "Trial12_45", incorrect: "Trial12incor", rotation: 45 },
+      { trial: "Trial13", correct: "Trial13_90", incorrect: "Trial13incor", rotation: 90 },
+      { trial: "Trial14", correct: "Trial14_45", incorrect: "Trial14incor", rotation: 45 },
+      { trial: "Trial15", correct: "Trial15_90", incorrect: "Trial15incor", rotation: 90 },
+      { trial: "Trial16", correct: "Trial16_45", incorrect: "Trial16incor", rotation: 45 }
+    ];
+
+    // Randomize trials order
+    var randomized_trials = jsPsych.randomization.sampleWithoutReplacement(rotation_images, rotation_images.length);
+
+    // These are the variables to track the participants responses. 
+    var rotation_durations = [];
+    var correct_responses = 0;
+    var total_responses = 0;
+    var correct_90 = 0;
+    var correct_45 = 0;
+    var total_90 = 0;
+    var total_45 = 0;
+
+    // This stores reaction times for correct/incorrect and by rotation angle
+    var rt_correct = [];
+    var rt_incorrect = [];
+    var rt_90_correct = [];
+    var rt_90_incorrect = [];
+    var rt_45_correct = [];
+    var rt_45_incorrect = [];
+
+    // Create rotation trials with random left/right positioning
+    randomized_trials.forEach(function(pair) {
+      // Randomly decide if the correct image will be on the left (F) or right (J)
+      var correct_side = jsPsych.randomization.sampleWithoutReplacement(['f', 'j'], 1)[0];
+
+      // Randomly assign the images to the left and right positions on the screen 
+      var images = (correct_side === 'f') ?
+        [pair.correct, pair.incorrect] : [pair.incorrect, pair.correct];
+
+      var rotation_trial = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `
+          <img src="Rotation Images/${pair.trial}.jpg" alt="Reference Block" style="max-width: 25%; max-height: 25%;"> <br>
+          <img src="Rotation Images/${images[0]}.jpg" alt="Incorrect Rotation" style="max-width: 25%; max-height: 25%;"> 
+          <img src="Rotation Images/${images[1]}.jpg" alt="Correct Rotation" style="max-width: 25%; max-height: 25%;"> 
+        `,
+        choices: ['f', 'j'],
+        response_ends_trial: true,
+        data: { rotation: pair.rotation },
+        on_finish: function(data) {
+          total_responses++;
+          var rt = data.rt / 1000;  
+          rotation_durations.push(rt);
+
+          if (data.response === correct_side) {
+            correct_responses++;
+            if (pair.rotation === 90) {
+              correct_90++;
+              rt_90_correct.push(rt);
+            } else {
+              correct_45++;
+              rt_45_correct.push(rt);
+            }
+          } else {
+            if (pair.rotation === 90) {
+              rt_90_incorrect.push(rt);
+            } else {
+              rt_45_incorrect.push(rt);
+            }
+          }
+
+          if (pair.rotation === 90) {
+            total_90++;
+          } else {
+            total_45++;
+          }
+        }
+      };
+      timeline.push(rotation_trial);
+    });
+
+    // After the mental rotation task, participants will get a demographics questionnaire. All fields must be answered before moving forward. For the age, you are required to answer a number. 
+    var demographics = {
+      type: jsPsychSurveyHtmlForm,
+      preamble: "<h3>Demographics Questionnaire</h3><p>Please answer the following questions.</p>",
+      html: `
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br><br> 
+
+        <label for="sex">Sex:</label>
+        <select id="sex" name="sex" required>
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+          <option value="prefer_not_say">Prefer not to say</option>
+        </select><br><br>
+
+        <label>Environment you grew up in:</label><br>
+        <input type="radio" id="urban" name="environment" value="urban" required>
+        <label for="urban">Urban</label><br>
+        <input type="radio" id="rural" name="environment" value="rural" required>
+        <label for="rural">Rural</label><br>
+      `,
+      button_label: "Continue"
+    };
+    
+    timeline.push(demographics);
+
+    // This is the thank you block that also talks about what the experiment was for. 
+    var thank_you = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <h2>Thank You for Your Participation!</h2>
+        <p>This experiment was designed to see whether priming of an urban or rural condition affects the rotation of 3D blocks. 
+          Specifically if the priming condition impacts perception of 45 versus 90 degree rotated blocks and to what extent.</p>
+        <p>Your responses help us understand cognitive processing related to spatial transformations.</p>
+        <p>If you have any questions or would like to know more about this study, please contact the team.</p>
+        <p>Press any key to see you results on the task.</p>
+      `,
+      post_trial_gap: 1000
+    };
+
+    timeline.push(thank_you);
+
+    // Declare global variables
+    let avg_rt, avg_rt_90, avg_rt_90_incorrect, avg_rt_45, avg_rt_45_incorrect;
+    let percentage_correct, percentage_correct_90, percentage_correct_45;
+
+    // This displays the final debrief page, where participants can see their results 
+    var debrief = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: function() {
+      // Log the arrays to ensure they are populated correctly
+      console.log("rt_correct:", rt_correct);
+      console.log("rt_incorrect:", rt_incorrect);
+      console.log("rt_90_correct:", rt_90_correct);
+      console.log("rt_90_incorrect:", rt_90_incorrect);
+      console.log("rt_45_correct:", rt_45_correct);
+      console.log("rt_45_incorrect:", rt_45_incorrect);
+
+      
+      // These are to calculate the averages with checks for empty arrays
+      var avg_rt = rotation_durations.length > 0 ? (rotation_durations.reduce((a, b) => a + b, 0) / rotation_durations.length) * 1000 : 0;
+      var avg_rt_90 = rt_90_correct.length > 0 ? (rt_90_correct.reduce((a, b) => a + b, 0) / rt_90_correct.length) * 1000 : 0;
+      var avg_rt_90_incorrect = rt_90_incorrect.length > 0 ? (rt_90_incorrect.reduce((a, b) => a + b, 0) / rt_90_incorrect.length) * 1000 : 0;
+      var avg_rt_45 = rt_45_correct.length > 0 ? (rt_45_correct.reduce((a, b) => a + b, 0) / rt_45_correct.length) * 1000 : 0;
+      var avg_rt_45_incorrect = rt_45_incorrect.length > 0 ? (rt_45_incorrect.reduce((a, b) => a + b, 0) / rt_45_incorrect.length) * 1000 : 0;
+
+      // These are to calculate accuracy percentages of the 90 and 45 degree trials 
+      var percentage_correct = total_responses > 0 ? (correct_responses / total_responses) * 100 : 0;
+      var percentage_correct_90 = total_90 > 0 ? (correct_90 / total_90) * 100 : 0;
+      var percentage_correct_45 = total_45 > 0 ? (correct_45 / total_45) * 100 : 0;
+
+     // This stores the experiment resutls
+     var experimentResults = {
+        avg_rt: avg_rt,
+        avg_rt_90: avg_rt_90,
+        avg_rt_90_incorrect: avg_rt_90_incorrect,
+        avg_rt_45: avg_rt_45,
+        avg_rt_45_incorrect: avg_rt_45_incorrect,
+        percentage_correct: percentage_correct,
+        percentage_correct_90: percentage_correct_90,
+        percentage_correct_45: percentage_correct_45
+    };
+
+    jsPsych.data.addProperties(experimentResults);
+
+
+      // Return the debriefing text to the participant 
+      return `
+        <h2>Experiment Complete! Here are your results:</h2>
+        <p>Your average reaction time for the rotation task is: ${avg_rt.toFixed(2)} ms.</p>
+        <p>Your average reaction time for 90 degree rotations is: ${avg_rt_90.toFixed(2)} ms.</p>
+        <p>Your average reaction time for incorrect 90 degree rotations is: ${avg_rt_90_incorrect.toFixed(2)} ms.</p>
+        <p>Your average reaction time for 45 degree rotations is: ${avg_rt_45.toFixed(2)} ms.</p>
+        <p>Your average reaction time for incorrect 45 degree rotations is: ${avg_rt_45_incorrect.toFixed(2)} ms.</p>
+        <p>Your accuracy was: ${percentage_correct.toFixed(2)}%</p>
+        <p>Your accuracy for 90 degree rotations was: ${percentage_correct_90.toFixed(2)}%</p>
+        <p>Your accuracy for 45 degree rotations was: ${percentage_correct_45.toFixed(2)}%</p>
+        <p>Thank you for participating!</p>
+        <p>Press any key to end.</p>
+      `;
+    },
+    post_trial_gap: 2000
+  };
+
+  timeline.push(debrief);
+
+  // Start the experiment. Can use simulate to run through the trials quickly and create fake data. 
+  jsPsych.simulate(timeline);
+  
+  </script>
+</html>

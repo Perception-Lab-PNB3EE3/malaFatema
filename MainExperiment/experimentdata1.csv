@@ -1,0 +1,120 @@
+"stimulus","rt","response","trial_type","trial_index","plugin_version","time_elapsed","condition","priming_duration","rotation"
+"Welcome to the study!","548","0","html-button-response","0","2.1.0","1","Urban","",""
+"<p>Results from this experiment will be saved and analyzed. By clicking 'I Consent', you agree to participate in this study.</p>","531","0","html-button-response","1","2.1.0","2","Urban","",""
+"
+        <p>This experiment contains two parts. You will shortly begin the
+        first part where you will receive multiple images of different environments.</p>
+        <p>The image will be displayed for 10 seconds. Please try to retain as much information 
+        regarding the image as you can. After the image is displayed, you will be asked questions for each image. 
+        Please respond to each prompt given with as much detail as you can. Make sure that you answer every promt. Make sure you
+        answer every prompt before moving to the next image.</p>
+        <p>Press any key to begin.</p>
+      ","1019","3","html-keyboard-response","2","2.1.0","2","Urban","",""
+"<img src=""PrimingImages/urban.jpg"" alt=""Image"" style=""max-width: 1200%; max-height: 120%;"">","null","null","html-keyboard-response","3","2.1.0","2","Urban","",""
+"","1134","{""structure"":"""",""rotation"":"""",""angle"":"""",""navigation"":""""}","survey-html-form","4","2.1.0","1137","Urban","1135",""
+"<img src=""PrimingImages/urban2.jpg"" alt=""Image"" style=""max-width: 70%; max-height: 70%;"">","null","null","html-keyboard-response","5","2.1.0","1138","Urban","",""
+"","706","{""structure"":"""",""rotation"":"""",""angle"":"""",""navigation"":""""}","survey-html-form","6","2.1.0","1844","Urban","706",""
+"<img src=""PrimingImages/urban3.jpg"" alt=""Image"" style=""max-width: 75%; max-height: 75%;"">","null","null","html-keyboard-response","7","2.1.0","1845","Urban","",""
+"","269","{""structure"":"""",""rotation"":"""",""angle"":"""",""navigation"":""""}","survey-html-form","8","2.1.0","2115","Urban","270",""
+"
+        <p>Now you will begin the second part of the experiment, which involves judging the rotation of 3D blocks.</p>
+        <p>You will see three images. One on the top and two on the bottom. The bottom 2 images will be the response images.</p>
+        <p>For each pair of images on the bottom, you will need to decide whether the blocks are the same or if one is rotated in comparison to the top image.</p>
+        <p>If you think the left image is correct, press the ""F"" key. If you think the right image is correct, press the ""J"" key.</p>
+        <p>To make is easier place one finger on each key.</p>
+        <p>Press any key to begin.</p>
+      ","598"," ","html-keyboard-response","9","2.1.0","2116","Urban","",""
+"
+          <img src=""Rotation Images/Trial16.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial16_45.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial16incor.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","825","f","html-keyboard-response","10","2.1.0","2117","Urban","","45"
+"
+          <img src=""Rotation Images/Trial5.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial5_90.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial5incor.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","461","f","html-keyboard-response","11","2.1.0","2117","Urban","","90"
+"
+          <img src=""Rotation Images/Trial2.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial2_45.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial2incor.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","570","f","html-keyboard-response","12","2.1.0","2117","Urban","","45"
+"
+          <img src=""Rotation Images/Trial7.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial7incor.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial7_90.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","547","j","html-keyboard-response","13","2.1.0","2117","Urban","","90"
+"
+          <img src=""Rotation Images/Trial9.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial9_90.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial9incor.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","573","f","html-keyboard-response","14","2.1.0","2118","Urban","","90"
+"
+          <img src=""Rotation Images/Trial4.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial4_45.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial4incor.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","1050","j","html-keyboard-response","15","2.1.0","2118","Urban","","45"
+"
+          <img src=""Rotation Images/Trial12.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial12incor.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial12_45.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","494","f","html-keyboard-response","16","2.1.0","2118","Urban","","45"
+"
+          <img src=""Rotation Images/Trial15.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial15_90.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial15incor.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","580","j","html-keyboard-response","17","2.1.0","2118","Urban","","90"
+"
+          <img src=""Rotation Images/Trial10.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial10incor.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial10_45.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","831","f","html-keyboard-response","18","2.1.0","2118","Urban","","45"
+"
+          <img src=""Rotation Images/Trial3.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial3_90.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial3incor.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","561","j","html-keyboard-response","19","2.1.0","2118","Urban","","90"
+"
+          <img src=""Rotation Images/Trial1.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial1incor.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial1_90.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","856","j","html-keyboard-response","20","2.1.0","2119","Urban","","90"
+"
+          <img src=""Rotation Images/Trial14.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial14incor.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial14_45.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","617","j","html-keyboard-response","21","2.1.0","2119","Urban","","45"
+"
+          <img src=""Rotation Images/Trial13.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial13_90.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial13incor.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","1006","j","html-keyboard-response","22","2.1.0","2119","Urban","","90"
+"
+          <img src=""Rotation Images/Trial8.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial8_45.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial8incor.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","687","j","html-keyboard-response","23","2.1.0","2119","Urban","","45"
+"
+          <img src=""Rotation Images/Trial11.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial11incor.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial11_90.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","539","j","html-keyboard-response","24","2.1.0","2120","Urban","","90"
+"
+          <img src=""Rotation Images/Trial6.jpg"" alt=""Reference Block"" style=""max-width: 25%; max-height: 25%;""> <br>
+          <img src=""Rotation Images/Trial6incor.jpg"" alt=""Incorrect Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+          <img src=""Rotation Images/Trial6_45.jpg"" alt=""Correct Rotation"" style=""max-width: 25%; max-height: 25%;""> 
+        ","612","f","html-keyboard-response","25","2.1.0","2120","Urban","","45"
+"","4062","{""age"":""12"",""sex"":""other"",""environment"":""urban""}","survey-html-form","26","2.1.0","6182","Urban","",""
+"
+        <h2>Experiment Complete! Here are your results:</h2>
+        <p>Your average reaction time for the rotation task is: 675.56 ms.</p>
+        <p>Your average reaction time for 90 degree rotations is: 595.20 ms.</p>
+        <p>Your average reaction time for incorrect 90 degree rotations is: 715.67 ms.</p>
+        <p>Your average reaction time for 45 degree rotations is: 670.67 ms.</p>
+        <p>Your average reaction time for incorrect 45 degree rotations is: 734.80 ms.</p>
+        <p>Your accuracy was: 50.00%</p>
+        <p>Your accuracy for 90 degree rotations was: 62.50%</p>
+        <p>Your accuracy for 45 degree rotations was: 37.50%</p>
+        <p>Thank you for participating!</p>
+        <p>Press any key to end.</p>
+      ","555","1","html-keyboard-response","27","2.1.0","6184","Urban","",""
