@@ -1,0 +1,430 @@
+---
+title: "Data Analysis Assignment"
+output: html_notebook
+---
+
+# This part is to stimulate the data 
+```{r}
+# load required data 
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+# stimulate the data 
+
+set.seed(20)
+
+# create the total number of participants for this data frame 
+nsubs = 34 # participants 
+
+# example with 2 subpop
+nGroups = 2
+nSubsGroup = 18
+
+# Condition
+nEnvi = 2 # environment conditions 
+EnviLabels <- c("Urban", "Rural")
+EnvPerParticipant = 17
+
+
+df <- data.frame(Participant=rep(0,nsubs),
+                 Environment=rep("NA",nsubs),
+                 ReactionTimeOverall=rep(0,nsubs),
+                 ReactionTimeIncorOverall=rep(0,nsubs),
+                 ReactionTime90=rep(0,nsubs),
+                 IncoReactionTime90=rep(0,nsubs),
+                 ReactionTime45=rep(0,nsubs),
+                 IncoReactionTime45=rep(0,nsubs),
+                 AccuracyOverall=rep(0,nsubs),
+                 Accuracy90=rep(0,nsubs),
+                 Accuracy45=rep(0,nsubs),
+                 Age=rep(0,nsubs),
+                 stringsAsFactors = TRUE)
+
+head(df)
+
+# Participant Data 
+df$Participant <- seq(1,nsubs)
+
+# Age of Participants 
+df$Age = sample(18:50, nsubs, replace = TRUE)
+
+# Environment Data 
+en1 <- rep(EnviLabels[1], times = nsubs/2)
+en2 <- rep(EnviLabels[2], times = nsubs/2)
+envs <- c(en1,en2)
+envs_shuffle <- sample(envs)
+df$Environment <- rep(envs_shuffle)
+
+
+df$ReactionTimeOverall = rnorm(nsubs, mean = 700, sd = 100)
+df$ReactionTime90 = rnorm(nsubs, mean = 700, sd = 100)
+df$ReactionTimeIncorOverall = rnorm(nsubs, mean = 800, sd = 100)
+df$IncoReactionTime90 = rnorm(nsubs, mean = 750, sd = 100)
+df$ReactionTime45 = rnorm(nsubs, mean = 720, sd = 100)
+df$IncoReactionTime45 = rnorm(nsubs, mean = 770, sd = 100)
+
+# Adjusting the reaction times for 90 degrees based on the environment condition
+df$ReactionTime90[df$Environment == "Urban"] = df$ReactionTime90[df$Environment == "Urban"] - 200  # Urban with 90 degrees is faster
+df$ReactionTime90[df$Environment == "Rural"] = df$ReactionTime90[df$Environment == "Rural"] + 200  # Rural with 90 degrees is slower
+
+# Adjusting the incorrect reaction times for 90 degrees based on environment condition
+df$IncoReactionTime90[df$Environment == "Urban"] = df$IncoReactionTime90[df$Environment == "Urban"] - 150  # Urban incorrect RT for 90 degrees is faster
+df$IncoReactionTime90[df$Environment == "Rural"] = df$IncoReactionTime90[df$Environment == "Rural"] + 175  # Rural incorrect RT for 90 degrees is slower
+
+# Adjusting the reaction times for 45 degrees based on the environment condition
+df$ReactionTime45[df$Environment == "Urban"] = df$ReactionTime45[df$Environment == "Urban"] - 200  # Urban with 45 degrees is faster
+df$ReactionTime45[df$Environment == "Rural"] = df$ReactionTime45[df$Environment == "Rural"] + 200  # Rural with 45 degrees is slower
+
+# Adjusting the incorrect reaction times for 45 degrees based on environment condition
+df$IncoReactionTime45[df$Environment == "Urban"] = df$IncoReactionTime45[df$Environment == "Urban"] - 200  # Urban incoherent RT for 45 degrees is faster
+df$IncoReactionTime45[df$Environment == "Rural"] = df$IncoReactionTime45[df$Environment == "Rural"] + 200  # Rural incoherent RT for 45 degrees is slower
+
+
+# This will give accuracy values as percentages between the given values 
+df$AccuracyOverall = runif(nsubs, min=60, max=100)  
+df$Accuracy90 = runif(nsubs, min=80, max=100)  
+df$Accuracy45 = runif(nsubs, min=60, max=100)  
+
+# Adjust accuracy based on environment condition  
+df$AccuracyOverall[df$Environment == "Urban"] = df$AccuracyOverall[df$Environment == "Urban"] + 5  # Urban is 5% more accurate  
+df$Accuracy90[df$Environment == "Urban"] = df$Accuracy90[df$Environment == "Urban"] + 5  
+df$Accuracy45[df$Environment == "Urban"] = df$Accuracy45[df$Environment == "Urban"] + 5  
+
+df$AccuracyOverall[df$Environment == "Rural"] = df$AccuracyOverall[df$Environment == "Rural"] - 5  # Rural is 5% less accurate  
+df$Accuracy90[df$Environment == "Rural"] = df$Accuracy90[df$Environment == "Rural"] - 5  
+df$Accuracy45[df$Environment == "Rural"] = df$Accuracy45[df$Environment == "Rural"] - 5  
+
+# This is to make sure that accuracy stays between 0% and 100%
+df$AccuracyOverall <- pmax(pmin(df$AccuracyOverall, 100), 0)  
+df$Accuracy90 <- pmax(pmin(df$Accuracy90, 100), 0)  
+df$Accuracy45 <- pmax(pmin(df$Accuracy45, 100), 0)  
+
+
+
+```
+
+
+# Data Cleaning 
+```{r}
+
+head(df) # Just to make sure that the data looks good 
+summary(df) #can see all the basic information including the mean median, etc. 
+
+ 
+
+```
+
+
+# Data exploration 
+```{r}
+# explore the summary 
+
+# THE MEAN VALUES 
+meanRT <- mean(df$ReactionTimeOverall) # Mean for the reaction time for the correct trials 
+meanIncRT <- mean(df$ReactionTimeIncorOverall) # Mean for the reaction time for the incorrect trials 
+meanRT_90 <- mean(df$ReactionTime90) # Mean for the correct 90 degree rotations --> reaction time 
+meanRT_45 <- mean(df$ReactionTime45) # Mean for the correct 45 degree rotations --> reaction time 
+meanIncRT_90 <- mean(df$IncoReactionTime90) # Mean for the incorrect 90 degree rotations --> reaction time 
+meanIncRT_45 <- mean(df$IncoReactionTime45) # Mean for the incorrect 45 degree rotations --> reaction time 
+meanAcc <- mean(df$AccuracyOverall) # Mean for accuracy overall 
+meanAcc_90 <- mean(df$Accuracy90) # Mean for percent accuracy in 90 degree trials 
+meanAcc_45 <- mean(df$Accuracy45) # Mean for percent accuracy in 45 degree trials 
+meanAge <- mean(df$Age) # Mean for age 
+
+print(meanRT)
+print(meanIncRT)
+print(meanRT_90)
+print(meanRT_45) 
+print(meanIncRT_90) 
+print(meanIncRT_45)
+print(meanAcc)
+print(meanAcc_90)
+print(meanAcc_45)
+print(meanAge)
+
+
+
+# THE STANDARD DEVIATION VALUES 
+sdRT <- sd(df$ReactionTimeOverall) # standard deviation for the reaction time for the correct trials 
+sdIncRT <- sd(df$ReactionTimeIncorOverall) # standard deviation for the reaction time for the incorrect trials 
+sdRT_90 <- sd(df$ReactionTime90) # standard deviation for the correct 90 degree rotations
+sdRT_45 <- sd(df$ReactionTime45) # standard deviation for the correct 45 degree rotations
+sdIncRT_90 <- sd(df$IncoReactionTime90) # standard deviation for the incorrect 90 degree rotations 
+sdIncRT_45 <- sd(df$IncoReactionTime45) # standard deviation for the incorrect 45 degree rotations
+sdAcc <- sd(df$AccuracyOverall) # standard deviation for accuracy overall 
+sdAcc_90 <- sd(df$Accuracy90) # standard deviation for percent accuracy in 90 degree trials 
+sdAcc_45 <- sd(df$Accuracy45) # standard deviation for percent accuracy in 45 degree trials 
+sdAge <- sd(df$Age) # standard deviation for age 
+
+print(sdRT)
+print(sdIncRT)
+print(sdRT_90)
+print(sdRT_45) 
+print(sdIncRT_90) 
+print(sdIncRT_45)
+print(sdAcc)
+print(sdAcc_90)
+print(sdAcc_45)
+print(sdAge)
+
+
+```
+
+# Checking for Normality: 
+## p-value < 0.05: Data are not normally distributed.
+## p-value ≥ 0.05: Data are likely normally distributed
+## If data is not normal, then alternative testing is required. 
+
+```{r}
+
+# Check normality using histograms, and Shapiro-Wilk test
+
+# Reaction Time Overall Histogram
+ggplot(df, aes(x = ReactionTimeOverall)) + 
+  geom_histogram(binwidth = 100, fill = "skyblue", color = "black", alpha = 0.7) + 
+  labs(title = "Reaction Time Overall", x = "Reaction Time (ms)", y = "Frequency") + 
+  theme_minimal()
+
+# Reaction Time 90° Histogram
+ggplot(df, aes(x = ReactionTime90)) + 
+  geom_histogram(binwidth = 100, fill = "skyblue", color = "black", alpha = 0.7) + 
+  labs(title = "Reaction Time (90°)", x = "Reaction Time (ms)", y = "Frequency") + 
+  theme_minimal()
+
+# Reaction Time 45° Histogram
+ggplot(df, aes(x = ReactionTime45)) + 
+  geom_histogram(binwidth = 100, fill = "skyblue", color = "black", alpha = 0.7) + 
+  labs(title = "Reaction Time (45°)", x = "Reaction Time (ms)", y = "Frequency") + 
+  theme_minimal()
+
+# Accuracy Overall Histogram
+ggplot(df, aes(x = AccuracyOverall)) + 
+  geom_histogram(binwidth = 8, fill = "skyblue", color = "black", alpha = 0.7) + 
+  labs(title = "Accuracy Overall", x = "Percent Accuracy", y = "Frequency") + 
+  theme_minimal()
+
+# Accuracy 90° Histogram
+ggplot(df, aes(x = Accuracy90)) + 
+  geom_histogram(binwidth = 8, fill = "skyblue", color = "black", alpha = 0.7) + 
+  labs(title = "Accuracy 90", x = "Percent Accuracy", y = "Frequency") + 
+  theme_minimal()
+
+# Accuracy 45° Histogram
+ggplot(df, aes(x = Accuracy45)) + 
+  geom_histogram(binwidth = 8, fill = "skyblue", color = "black", alpha = 0.7) + 
+  labs(title = "Accuracy 45", x = "Percent Accuracy", y = "Frequency") + 
+  theme_minimal()
+
+# Shapiro-Wilk Test for Normality
+shapiro.test(df$ReactionTimeOverall)
+shapiro.test(df$ReactionTime90)
+shapiro.test(df$ReactionTime45)
+shapiro.test(df$AccuracyOverall)
+shapiro.test(df$Accuracy90)
+shapiro.test(df$Accuracy45)
+
+# p-value < 0.05: Data are not normally distributed.
+# p-value ≥ 0.05: Data are likely normally distributed
+
+```
+
+## Since the accuracy variables are not normally distributed, we will log transform them and then check them again. 
+```{r}
+# Add a small constant to handle zero values
+df$AccuracyOverall_log <- log(df$AccuracyOverall + 1)
+df$Accuracy90_log <- log(df$Accuracy90 + 1)
+df$Accuracy45_log <- log(df$Accuracy45 + 1)
+
+# Check normality again
+shapiro.test(df$AccuracyOverall_log)
+shapiro.test(df$Accuracy90_log)
+shapiro.test(df$Accuracy45_log)
+```
+## After checking the log transformation, the overall accuracy and the accuracy for the 90 degree condition are still not normal. Thus we will proceede with non parametric tests for those variables. 
+
+
+# Non-Parametric Test: 
+```{r}
+
+# Non-Parametric Test --> Mann-Whitney U Test
+
+# For overall accuracy 
+wilcox.test(AccuracyOverall_log ~ Environment, data = df)
+
+# For accuracy of 90 degrees
+wilcox.test(Accuracy90_log ~ Environment, data = df)
+
+```
+# Non Parametric Test Results: 
+
+## Accuracy Overall: p-value = 0.04542.
+### This p-value suggests a significant difference between the Urban and Rural environments in terms of the overall accuracy. 
+
+## Accuracy 90: p-value = 1.216e-05.
+### The very small p-value indicates a highly significant difference in accuracy at the 90° angle between the two environments. This result strongly suggests that there is a difference in performance between Urban and Rural environments for this specific angle.
+
+#
+#
+#
+
+# ANOVA:
+```{r}
+
+############################################################
+# ANOVA for Reaction Time
+# Reaction Time (45°)
+anova_RT_45 <- aov(ReactionTime45 ~ Environment, data = df)
+
+# Reaction Time (90°)
+anova_RT_90 <- aov(ReactionTime90 ~ Environment, data = df)
+
+# Overall Reaction Time (if needed)
+anova_RT_overall <- aov(ReactionTimeOverall ~ Environment, data = df)
+
+summary(anova_RT_45)
+summary(anova_RT_90)
+summary(anova_RT_overall)
+
+############################################################
+# ANOVA for accuracy (45 degrees only since that was the only normal one)
+anova_Acc_45 <- aov(Accuracy45_log ~ Environment, data = df)
+summary(anova_Acc_45)
+
+############################################################
+# ANOVA for interactions --> have to first convert it to long format in order to run the two way anova for the interactions 
+df_long <- df %>%
+  pivot_longer(cols = c(ReactionTime45, ReactionTime90), 
+               names_to = "Angle", values_to = "ReactionTime") %>%
+  mutate(Angle = ifelse(Angle == "ReactionTime45", 45, 90))  # Convert to numeric
+
+anova_RT_interaction <- aov(ReactionTime ~ Environment * Angle, data = df_long)
+summary(anova_RT_interaction)
+```
+
+# ANOVA RESULTS 
+## Reaction Time ANOVA:
+### - 45° Angle (Overall): Significant difference in reaction time between the environments for the 45° angle.
+### - 90° Angle (Overall): Significant difference in reaction time between the environments for the 90° angle.
+### - Overall Reaction Time: No significant effect of environment on overall reaction time.
+
+## Accuracy ANOVA for 45°:
+### Environment: Significant difference in accuracy between the two environments for the 45° angle.
+
+## Interaction ANOVA: 
+### The significant effect on reaction time is due to Environment, but Angle and its interaction with Environment do not seem to have a significant impact.
+
+# Main Results: 
+## Reaction Time:
+### There is a strong significant difference in reaction time between Urban and Rural environments for both the 45° and 90° angles, but no significant difference for Overall Reaction Time. This suggests that the effect is specific to the angle conditions rather than the overall measure.
+## Accuracy:
+### There is a significant effect of environment on accuracy for the 45° angle, indicating that the environment influences how accurately participants perform at this angle.
+
+
+
+
+
+# Post Hoc Test
+```{r}
+
+# Reaction Time (45°)
+pairwise_RT_45 <- pairwise.t.test(df$ReactionTime45, df$Environment, p.adjust.method = "bonferroni")
+# Reaction Time (90°)
+pairwise_RT_90 <- pairwise.t.test(df$ReactionTime90, df$Environment, p.adjust.method = "bonferroni")
+# Accuracy (45°)
+pairwise_Acc_45 <- pairwise.t.test(df$Accuracy45_log, df$Environment, p.adjust.method = "bonferroni")
+
+
+print(pairwise_RT_45)
+print(pairwise_RT_90)
+print(pairwise_Acc_45)
+
+```
+# Results of the Post Hoc Analysis: 
+## 1. Reaction Time (45°)
+### Rural vs. Urban: There is a highly significant difference in reaction time between Rural and Urban environments (p = 3.4e-09), indicating that the environment has a significant effect on reaction time at the 45° angle.
+
+## 2. Reaction Time (90°)
+### Rural vs. Urban: Similarly, there is a highly significant difference in reaction time between Rural and Urban environments (p = 8.5e-11), showing a significant effect on reaction time at the 90° angle as well.
+
+## 3. Accuracy (45°)
+### Rural vs. Urban: There is a statistically significant difference in accuracy between Rural and Urban environments (p = 0.0084), suggesting that environment has a significant effect on accuracy at the 45° angle.
+
+## Summary:
+### Reaction Time: Significant difference between Rural and Urban for both the 45° and 90° angles.
+### Accuracy: Significant difference between Rural and Urban environments for the 45° angle.
+
+# Visualizations 
+
+```{r}
+# Reaction Time (45°)
+ggplot(df, aes(x = Environment, y = ReactionTime45, fill = Environment)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("skyblue", "lightcoral")) +  # Customize colors
+  labs(title = "Reaction Time (45°) by Environment", x = "Environment", y = "Reaction Time (ms)") +
+  theme_minimal()
+```
+#### The mean differences for reaction time of 45 degree angle between environment conditions
+
+```{r}
+# Reaction Time (90°)
+ggplot(df, aes(x = Environment, y = ReactionTime90, fill = Environment)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("skyblue", "lightcoral")) +
+  labs(title = "Reaction Time (90°) by Environment", x = "Environment", y = "Reaction Time (ms)") +
+  theme_minimal()
+```
+#### The mean differences for reaction time of 90 degree angle between environment conditions
+
+```{r}
+# Accuracy (45°)
+ggplot(df, aes(x = Environment, y = Accuracy45_log, fill = Environment)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("skyblue", "lightcoral")) +
+  labs(title = "Accuracy (45°) by Environment", x = "Environment", y = "Accuracy (log-transformed)") +
+  theme_minimal()
+
+```
+#### The mean differences for accuracy of 45 degree angle between environment conditions
+
+```{r}
+# Reaction time for both angles
+df_long <- df %>%
+  gather(key = "Angle", value = "ReactionTime", ReactionTime45, ReactionTime90)
+# Boxplot for Reaction Times (45° and 90°) shown together 
+ggplot(df_long, aes(x = Environment, y = ReactionTime, fill = Angle)) + 
+  geom_boxplot(position = position_dodge(0.8)) + 
+  scale_fill_manual(values = c("skyblue", "lightcoral")) +
+  labs(title = "Comparison of Reaction Time (45° vs 90°) by Environment", 
+       x = "Environment", y = "Reaction Time (ms)", fill = "Angle Condition") +
+  theme_minimal() + 
+  theme(legend.position = "top")
+```
+#### Combined mean reaction times for both the angles and environment
+
+```{r}
+ggplot(df, aes(x = ReactionTimeOverall, y = AccuracyOverall, color = Environment)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(title = "Reaction Time vs Accuracy by Environment", 
+       x = "Overall Reaction Time (ms)", y = "Accuracy (%)") + 
+  theme_minimal() + 
+  theme(legend.position = "top")
+
+```
+#### Scatter plot of reaction time vs accuracy for both environments with their regression lines. Both lines show that accuracy is not correlated with the reaction time in both environments.  
+
+Additional Demographic Stats: 
+```{r}
+
+mean_age <- mean(df$Age)
+print (mean_age)
+
+```
+#### The mean age for the participants was: 31.2
+
+
+# Final Summary: 
+##### The environment (Rural vs. Urban) significantly affects reaction times at both 45° and 90° angles, but there is no overall significant effect on reaction time when considering all angles together. The environment also has a significant effect on accuracy for the 45° angle.Angle alone doesn't seem to significantly influence reaction time in a meaningful way without the environment being considered. Additionally the visualizations show that urban conditions had a faster reaction time than rural conditions. 
+
+
